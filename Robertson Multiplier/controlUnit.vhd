@@ -19,12 +19,12 @@ entity ControlUnit is
     );
 end ControlUnit;
 architecture behavior of ControlUnit is
-    type state_type is (S_BEGIN, S_INPUT_Q, S_TEST1, S_ADD, S_SHIFT, S_TEST2, S_TEST3, S_CORR, S_OUT_A, S_OUT_Q, S_END);
+    type state_type is (S_IDLE, S_BEGIN, S_INPUT_Q, S_TEST1, S_ADD, S_SHIFT, S_TEST2, S_TEST3, S_CORR, S_OUT_A, S_OUT_Q, S_END);
     signal current_state, next_state: state_type;
 begin
     process(clk, rst) begin
         if rst = '1' then
-            current_state <= S_BEGIN;
+            current_state <= S_IDLE;
         elsif rising_Edge(clk) then
             current_State <= next_state;
         end if;
@@ -33,6 +33,12 @@ begin
         C0 <= '0'; C1 <= '0'; C2 <= '0'; C3 <= '0'; C4 <= '0'; C5 <= '0'; C6 <= '0'; done <= '0';
         next_state <= current_state;
         case current_state is
+            when S_IDLE =>
+                if start = '1' then
+                    next_state <= S_BEGIN;
+                else
+                    next_state <= S_IDLE;
+                end if;
             when S_BEGIN => 
                 C0 <= '1';
                 if start = '1' then 
@@ -78,8 +84,10 @@ begin
             when S_END => 
                 done <= '1';
                 if start = '0' then
-                    next_state <= S_BEGIN;
+                    next_state <= S_IDLE;
                 end if;
+            when others =>
+                next_state <= S_IDLE;
         end case;
     end process;
 end behavior;

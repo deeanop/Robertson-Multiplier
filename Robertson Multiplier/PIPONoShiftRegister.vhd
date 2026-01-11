@@ -13,11 +13,13 @@ entity PIPONoShiftRegister is
 end PIPONoShiftRegister;
 architecture behavior of PIPONoShiftRegister is
     signal internal_Q: STD_LOGIC_VECTOR(7 downto 0);
+    signal d_input: STD_LOGIC_VECTOR(7 downto 0);
 begin
+    d_input <= A when (write_en = '1') else internal_Q;
     gen_D: for i in 0 to 7 generate begin
         D_inst: entity work.DFlipFlop
             port map(
-                D => A(i),
+                D => d_input(i),
                 clk => clk,
                 clr => clr,
                 Q => internal_Q(i)
