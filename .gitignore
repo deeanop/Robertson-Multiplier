@@ -1,0 +1,68 @@
+# ==========================================
+# General and Temporary Files
+# ==========================================
+*.log
+*.jou
+*.pb
+*.str
+*.txt
+
+# ==========================================
+# Xilinx / AMD Vivado
+# ==========================================
+.Xil/
+xsim.dir/
+xil_*
+.cache/
+
+*.bit
+*.bin
+*.ltx
+*.bxml
+*.gen
+*.xml
+
+# Fișiere de simulare Vivado
+xsim.ini
+webtalk*
+
+# ==========================================
+# Intel / Altera Quartus
+# ==========================================
+db/
+incremental_db/
+simulation/
+timing/
+greybox_tmp/
+hc_output/
+.qsys_edit/
+
+*.qws
+*.vwm
+*.sof
+*.pof
+*.rpt
+*.summary
+
+# ==========================================
+# ModelSim / QuestaSim
+# ==========================================
+work/
+msim/
+*.wlf
+*.mpf
+*.cr.mti
+*.transcript
+
+# ==========================================
+# GHDL
+# ==========================================
+*.o
+*.cf
+e~*
+
+# ==========================================
+# OS Specific Files
+# ==========================================
+.DS_Store
+Thumbs.db...
