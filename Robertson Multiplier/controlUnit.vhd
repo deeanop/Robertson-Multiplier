@@ -7,7 +7,7 @@ entity ControlUnit is
         rst: in STD_LOGIC;
         start: in STD_LOGIC;
         q0: in STD_LOGIC;
-        count_val: in integer range 0 to 7;
+        count_done: in STD_LOGIC; 
         C0: out STD_LOGIC;
         C1: out STD_LOGIC;
         C2: out STD_LOGIC;
@@ -18,6 +18,7 @@ entity ControlUnit is
         done: out STD_LOGIC
     );
 end ControlUnit;
+
 architecture behavior of ControlUnit is
     type state_type is (S_IDLE, S_BEGIN, S_INPUT_Q, S_TEST1, S_ADD, S_SHIFT, S_TEST2, S_TEST3, S_CORR, S_OUT_A, S_OUT_Q, S_END);
     signal current_state, next_state: state_type;
@@ -29,7 +30,7 @@ begin
             current_State <= next_state;
         end if;
     end process;
-    process(current_state, start, q0, count_val) begin
+    process(current_state, start, q0, count_done) begin
         C0 <= '0'; C1 <= '0'; C2 <= '0'; C3 <= '0'; C4 <= '0'; C5 <= '0'; C6 <= '0'; done <= '0';
         next_state <= current_state;
         case current_state is
@@ -41,9 +42,7 @@ begin
                 end if;
             when S_BEGIN => 
                 C0 <= '1';
-                if start = '1' then 
-                    next_state <= S_INPUT_Q;
-                end if;
+                next_state <= S_INPUT_Q;
             when S_INPUT_Q => 
                 C1 <= '1';
                 next_state <= S_TEST1;
@@ -60,7 +59,7 @@ begin
                 C3 <= '1';
                 next_state <= S_TEST2;
             when S_TEST2 => 
-                if count_val < 8 then
+                if count_done = '0' then
                     next_state <= S_TEST1;
                 else
                     next_state <= S_TEST3;
