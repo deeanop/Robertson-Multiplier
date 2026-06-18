@@ -23,7 +23,7 @@ begin
             mux_out(i) <= A(i) when shift_nload = '0' else ser_in;
         end generate;
         bit_rest: if i < 7 generate
-            mux_out(i) <= A(i) when shift_nload = '0' else internal_Q(i+1);
+            mux_out(i) <= A(i) when shift_nload = '0' else internal_Q(i-1);
         end generate;
     end generate;
     d_final <= mux_out when write_en = '1' else internal_Q;
