@@ -9,5 +9,5 @@ entity orGate is
 end orGate;
 
 architecture behavior of orGate is begin
-	Z < A or B;
+	Z <= A or B;
 end behavior;
