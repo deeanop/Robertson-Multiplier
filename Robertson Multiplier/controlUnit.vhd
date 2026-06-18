@@ -60,7 +60,7 @@ begin
                 C3 <= '1';
                 next_state <= S_TEST2;
             when S_TEST2 => 
-                if count_val < 7 then
+                if count_val < 8 then
                     next_state <= S_TEST1;
                 else
                     next_state <= S_TEST3;
